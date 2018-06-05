@@ -2,6 +2,7 @@
  * Created by zh on 2018/6/5.
  */
 import JWT from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 import * as userModal from '../model/userModel'
 
@@ -22,7 +23,7 @@ export async function postUserAuth(ctx) {
     };
     return
   }
-  if (userInfo.password !== data.password) {
+  if (!bcrypt.compareSync(userInfo.password, data.password)) {
     ctx.body = {
       success: false,
       info: '密码错误',

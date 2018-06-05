@@ -9,7 +9,7 @@
           <el-col :span="6">
             <el-input type="text"
                       placeholder="请输入用户名"
-                      v-model.trim="userInfo.username"
+                      v-model.trim="username"
                       clearable
                       autofocus="true"
                       @keyup.enter.native="login">
@@ -20,7 +20,7 @@
           <el-col :span="6">
             <el-input type="password"
                       placeholder="请输入密码"
-                      v-model.trim="userInfo.password"
+                      v-model.trim="password"
                       clearable
                       @keyup.enter.native="login">
             </el-input>
@@ -37,60 +37,56 @@
 </template>
 
 <script>
+  import bcrypt from 'bcryptjs';
   import * as API from '@/newwork/api';
 
   export default {
     data() {
       return {
-        userInfo: {
-          username: '',
-          password: ''
-        },
+        username: '',
+        password: ''
       }
     },
     computed: {},
     methods: {
       login() {
-        if (!this.userInfo.username) {
-          this.$message({
-            message: '请输入用户名',
-            type: 'error',
-            duration: 1500,
-          });
+        const self = this;
+        if (!this.username) {
+          this.$message({ message: '请输入用户名', type: 'error', duration: 1500, });
           return;
         }
-        if (!this.userInfo.password) {
-          this.$message({
-            message: '请输入密码',
-            type: 'error',
-            duration: 1500
-          });
+        if (!this.password) {
+          this.$message({ message: '请输入密码', type: 'error', duration: 1500 });
           return;
         }
         const loading = this.showLoading();
+
+        // 对密码加密
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(this.password, salt);
+
+        console.log(hash);
         const userInfo = {
-          ...this.userInfo
+          username: this.username,
+          password: hash,
         };
-        this.$http.post(API.userAPI.login, userInfo) // 将信息发送给后端
+
+        // 将信息发送给后端
+        this.$http.post(API.userAPI.login, userInfo)
           .finally(() => {
-              loading.close()
-            }
-          )
+            loading.close()
+          })
           .then(res => {
             const data = res.data;
             if (!data.success) {
-              this.$message({
-                message: data.info,
-                type: 'error',
-                duration: 1500
-              });
+              this.$message({ message: data.info, type: 'error', duration: 1500 });
             } else {
               this.$message({
                 message: data.info,
                 type: 'success',
                 duration: 1000,
                 onClose() {
-                  this.goInside()
+                  self.goInside()
                 }
               });
             }
@@ -108,7 +104,7 @@
         })
       },
       goInside() {
-        console.log('go')
+        this.$router.push('/admin')
       }
     },
     components: {}
