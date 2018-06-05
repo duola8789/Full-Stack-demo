@@ -5,6 +5,12 @@ import App from './App'
 import router from './router'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
+import Axios from 'axios';
+
+import '@/helper/urlHelper'
+
+
+Vue.prototype.$http = Axios;
 
 Vue.config.productionTip = false;
 

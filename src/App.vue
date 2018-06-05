@@ -19,6 +19,9 @@
     padding: 0;
     box-sizing: border-box;
   }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

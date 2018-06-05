@@ -7,6 +7,7 @@ import KoaRouter from 'koa-router';
 import KoaBodyParser from 'koa-bodyparser';
 import KoaLogger from 'koa-logger';
 import KoaJson from 'koa-json';
+import Kcors from 'kcors';
 
 import * as auth from './router/authRouter';
 
@@ -17,6 +18,14 @@ const authRouter = auth.router;
 app.use(KoaBodyParser());
 app.use(KoaLogger());
 app.use(KoaJson());
+
+// 跨域设置
+const corsOptions = {
+  'origin': '',
+  'credentials': true,
+  'maxAge': 3600
+};
+app.use(Kcors(corsOptions));
 
 app.use( async (ctx, next) => {
   const start = new Date();
