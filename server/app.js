@@ -8,7 +8,12 @@ import KoaBodyParser from 'koa-bodyparser';
 import KoaLogger from 'koa-logger';
 import KoaJson from 'koa-json';
 
+import * as auth from './router/authRouter';
+
 const app = new Koa();
+const router = new KoaRouter();
+const authRouter = auth.router;
+
 app.use(KoaBodyParser());
 app.use(KoaLogger());
 app.use(KoaJson());
@@ -23,6 +28,10 @@ app.use( async (ctx, next) => {
 app.on('error', (err, ctx) => {
   console.log('server error: ', err);
 });
+
+router.use('/auth', authRouter.routes());
+
+app.use(router.routes());
 
 app.listen(8889, () => {
   console.log('Koa is listening in 8889');
