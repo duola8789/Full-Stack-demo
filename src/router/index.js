@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import JWT from 'jsonwebtoken';
 import Login from '@/components/Login'
 import Admin from '@/components/Admin'
+import AdminALL from '@/components/AdminALL'
 import config from '../../config/common';
 
 Vue.use(Router);
@@ -20,9 +21,14 @@ const router = new Router({
       component: Login
     },
     {
-      path: '/admin',
+      path: '/admin/:id',
       name: 'admin',
       component: Admin
+    },
+    {
+      path: '/admin',
+      name: 'adminAll',
+      component: AdminALL
     }
   ]
 });
@@ -30,20 +36,24 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const token = sessionStorage.getItem('userToken');
   const isTokenRight = !!(token && JWT.decode(token) && (JWT.decode(token).iss === config.userToken.iss));
-  if (to.path === '/admin') {
-    if (isTokenRight) {
-      next()
-    } else {
-      next('/login')
-    }
-  } else if (to.path === '/login') {
-    if (isTokenRight) {
+
+  // 全局设定发送请求header的token验证
+  if (isTokenRight) {
+    Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token
+  }
+
+  if (to.path === '/login') { // 如果是跳转到登陆页的
+    if (isTokenRight) { // 如果有token就转向admin页不返回登录页
       next('/admin')
-    } else {
+    } else { // 否则呆在登陆页
       next()
     }
   } else {
-    next()
+    if (isTokenRight) { // 如果有token就正常转向
+      next()
+    } else {
+      next('/login') // 否则跳转回登录页
+    }
   }
 });
 

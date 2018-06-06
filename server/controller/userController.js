@@ -6,10 +6,25 @@ import bcrypt from 'bcryptjs';
 
 import * as userModal from '../model/userModel'
 import config from '../../config/common';
+import serverConfig from '../config/server';
 
 export async function getUserInfo(ctx) {
   const id = ctx.params.id; // 获取url里传过来的参数里的id
-  ctx.body = await userModal.getUserById(id); // 将请求的结果放到response的body里返回
+  const user = await userModal.getUserById(id);
+  if (user) {
+    ctx.body = {
+      success: true,
+      retDsc: '查询成功',
+      ret: user
+    }
+  } else {
+    ctx.body = {
+      success: false,
+      retDsc: '用户不存在',
+      ret: null
+    };
+  }
+
 }
 
 export async function postUserAuth(ctx) {
@@ -19,16 +34,16 @@ export async function postUserAuth(ctx) {
   if (!userInfo) {
     ctx.body = {
       success: false,
-      info: '用户不存在',
-      token: null
+      retDsc: '用户不存在',
+      ret: null
     };
     return
   }
   if (!bcrypt.compareSync(data.password, userInfo.password)) {
     ctx.body = {
       success: false,
-      info: '密码错误',
-      token: null
+      retDsc: '密码错误',
+      ret: null
     };
     return
   }
@@ -37,12 +52,14 @@ export async function postUserAuth(ctx) {
     name: userInfo.username,
     id: userInfo.id,
   };
-  const secret = 'my-first-try'; // 指定密钥，这是之后用来判断token合法性的标志
+  const secret = serverConfig.jwtSecret; // 指定密钥，这是之后用来判断token合法性的标志
   const token = JWT.sign(userToken, secret); // 签发token
   ctx.body = {
     success: true,
-    info: '登陆成功',
-    token,
+    retDsc: '登陆成功',
+    ret: {
+      token,
+    }
   }
 }
 

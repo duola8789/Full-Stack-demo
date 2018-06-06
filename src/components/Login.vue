@@ -39,6 +39,7 @@
 <script>
   import bcrypt from 'bcryptjs';
   import * as API from '@/newwork/api';
+  import * as uiHelper from '@/helper/uiHelper';
 
   export default {
     data() {
@@ -52,14 +53,13 @@
       login() {
         const self = this;
         if (!this.username) {
-          this.$message({ message: '请输入用户名', type: 'error', duration: 1500, });
+          uiHelper.showMessage('请输入用户名', 'error');
           return;
         }
         if (!this.password) {
-          this.$message({ message: '请输入密码', type: 'error', duration: 1500 });
+          uiHelper.showMessage('请输入密码', 'error');
           return;
         }
-        const loading = this.showLoading();
 
         const userInfo = {
           username: this.username,
@@ -68,37 +68,18 @@
 
         // 将信息发送给后端
         this.$http.post(API.userAPI.login, userInfo)
-          .finally(() => {
-            loading.close()
-          })
           .then(res => {
             const data = res.data;
             if (!data.success) {
-              this.$message({ message: data.info, type: 'error', duration: 1500 });
+              uiHelper.showMessage(data.retDsc, 'error');
             } else {
-              console.log(JWT.decode(data.token));
-              sessionStorage.setItem('userToken', data.token);
-              this.$message({
-                message: data.info,
-                type: 'success',
-                duration: 1000,
-                onClose() {
-                  self.goInside()
-                }
-              });
+              sessionStorage.setItem('userToken', data.ret.token);
+              uiHelper.showMessage(data.retDsc, 'success', 1000, self.goInside);
             }
           })
           .catch((e) => {
             console.log('登陆错误', e)
           })
-      },
-      showLoading() {
-        return this.$loading({
-          lock: true,
-          text: 'Loading',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        })
       },
       goInside() {
         this.$router.push('/admin')
@@ -110,6 +91,8 @@
 
 <style scoped>
   .login-wrapper {
+    position: fixed;
+    width: 100%;
     height: 100%;
     padding-top: 100px;
     background-image: linear-gradient(to right, #7A88FF, #7AFFAF);

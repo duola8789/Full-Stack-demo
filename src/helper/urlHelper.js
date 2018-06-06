@@ -2,7 +2,6 @@
  * Created by zh on 2018/6/5.
  */
 import config from '../../config/common';
-import Axios from 'axios'
 
 export function goToUrl(url) {
   window.location.href = url;
@@ -40,9 +39,3 @@ export function getAppServerHostPath() {
   }
   return sHostPath;
 }
-
-// axios
-Axios.defaults.baseURL = config.appServer.protocol + config.appServer.host + ':' + config.appServer.port;
-Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-Axios.defaults.withCredentials = true;
-

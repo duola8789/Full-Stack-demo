@@ -14,7 +14,6 @@
 
 <style>
   html, body {
-    height: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -28,6 +27,5 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    height: 100%;
   }
 </style>
