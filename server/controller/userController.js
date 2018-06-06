@@ -5,6 +5,7 @@ import JWT from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 import * as userModal from '../model/userModel'
+import config from '../../config/common';
 
 export async function getUserInfo(ctx) {
   const id = ctx.params.id; // 获取url里传过来的参数里的id
@@ -23,7 +24,7 @@ export async function postUserAuth(ctx) {
     };
     return
   }
-  if (!bcrypt.compareSync(userInfo.password, data.password)) {
+  if (!bcrypt.compareSync(data.password, userInfo.password)) {
     ctx.body = {
       success: false,
       info: '密码错误',
@@ -31,8 +32,8 @@ export async function postUserAuth(ctx) {
     };
     return
   }
-
   const userToken = {
+    iss: config.userToken.iss,
     name: userInfo.username,
     id: userInfo.id,
   };

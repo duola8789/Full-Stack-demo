@@ -61,14 +61,9 @@
         }
         const loading = this.showLoading();
 
-        // 对密码加密
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(this.password, salt);
-
-        console.log(hash);
         const userInfo = {
           username: this.username,
-          password: hash,
+          password: this.password,
         };
 
         // 将信息发送给后端
@@ -81,6 +76,8 @@
             if (!data.success) {
               this.$message({ message: data.info, type: 'error', duration: 1500 });
             } else {
+              console.log(JWT.decode(data.token));
+              sessionStorage.setItem('userToken', data.token);
               this.$message({
                 message: data.info,
                 type: 'success',
