@@ -9,5 +9,7 @@ export const exampleAPI = {
   find: '/api/example',
   findAll: '/api/examples',
   add: '/api/example',
+  update: '/api/example',
+  remove: '/api/example'
 };
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="example of examples" :key="example.id">
+    <div v-for="example of examples" :key="example.id" @click="goToAdmin(example.id)">
       <span>{{example.id}}</span>--<span>{{example.title}}</span>--<span>{{example.image}}</span>
     </div>
   </div>
@@ -37,6 +37,9 @@
           .catch(e => {
             console.log('查询example错误', e)
           })
+      },
+      goToAdmin(id) {
+        this.$router.push(`/admin/${id}`)
       },
     },
     components: {}
