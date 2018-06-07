@@ -10,6 +10,9 @@ import KoaJson from 'koa-json';
 import Kcors from 'kcors';
 import jwt from 'koa-jwt';
 
+import path from 'path';
+import server from 'koa-static';
+
 import serverConfig from './config/server';
 import * as auth from './router/auth';
 import * as api from './router/api';
@@ -41,31 +44,31 @@ app.use(async (ctx, next) => {
 });
 
 // 如果JWT验证失败，返回验证失败信息
-// app.use(async function (ctx, next) {
-//   try {
-//     await next()
-//   } catch (err) {
-//     if (err.status === 401) {
-//       ctx.status = 401;
-//       ctx.body = {
-//         success: false,
-//         retDsc: 'Protected resource, use Authorization header to get access',
-//         ret: null
-//       }
-//     } else {
-//       throw err
-//     }
-//   }
-// });
+app.use(async function (ctx, next) {
+  try {
+    await next()
+  } catch (err) {
+    if (err.status === 401) {
+      ctx.status = 401;
+      ctx.body = {
+        success: false,
+        retDsc: 'Protected resource, use Authorization header to get access',
+        ret: null
+      }
+    } else {
+      throw err
+    }
+  }
+});
 
 app.on('error', (err, ctx) => {
   console.log('server error: ', err);
 });
 
-router.use('/auth', authRouter.routes());
-// router.use('/api', jwt({ secret: serverConfig.jwtSecret }), apiRouter.routes()); // 所有走/api/打头的请求都需要经过jwt验证。
-router.use('/api', apiRouter.routes()); // 所有走/api/打头的请求都需要经过jwt验证。
+app.use(server(path.resolve('dist'))); // 将webpack打包好的项目目录作为Koa静态文件服务的目录
 
+router.use('/auth', authRouter.routes());
+router.use('/api', jwt({ secret: serverConfig.jwtSecret }), apiRouter.routes()); // 所有走/api/打头的请求都需要经过jwt验证。
 
 app.use(router.routes());
 
