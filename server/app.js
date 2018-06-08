@@ -9,6 +9,7 @@ import KoaLogger from 'koa-logger';
 import KoaJson from 'koa-json';
 import Kcors from 'kcors';
 import jwt from 'koa-jwt';
+import Compress from 'koa-compress';
 
 import path from 'path';
 import server from 'koa-static';
@@ -22,6 +23,8 @@ const router = new KoaRouter();
 
 const authRouter = auth.router;
 const apiRouter = api.router;
+
+app.use(Compress({ threshold: 2048 }));
 
 app.use(KoaBodyParser());
 app.use(KoaLogger());
@@ -72,7 +75,7 @@ router.use('/api', jwt({ secret: serverConfig.jwtSecret }), apiRouter.routes());
 
 app.use(router.routes());
 
-app.listen(8080, () => {
+app.listen(80, () => {
   console.log('Koa is listening in 80');
 });
 
