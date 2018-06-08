@@ -6,7 +6,9 @@ import axios from 'axios'
 import config from '../../config/common';
 import * as uiHelper from '@/helper/uiHelper'
 
-axios.defaults.baseURL = config.appServer.protocol + config.appServer.host + ':' + config.appServer.port;
+const sever = process.env.NODE_ENV === "development" ? config.devServer : config.appServer;
+
+axios.defaults.baseURL = config.devServer.protocol + config.devServer.host + ':' + config.devServer.apiPort;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.withCredentials = true;
 
