@@ -3,7 +3,7 @@
  */
 module.exports  = exports = {
   mysql: {
-    default: 'mysql://root:zhouhao8789@localhost/zhou'
+    default: 'mysql://root:zhouhao8789@172.21.0.15/zhou'
   },
   jwtSecret: 'my-first-try',
 };

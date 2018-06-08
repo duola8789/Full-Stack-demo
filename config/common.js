@@ -10,8 +10,8 @@ module.exports = exports = {
 
   appServer: {
     protocol: 'http://',
-    host: '127.0.0.1',
-    port: 8889
+    host: '154.8.150.30',
+    port: 80
   },
 
   userToken: {

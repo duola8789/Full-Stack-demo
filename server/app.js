@@ -72,8 +72,8 @@ router.use('/api', jwt({ secret: serverConfig.jwtSecret }), apiRouter.routes());
 
 app.use(router.routes());
 
-app.listen(8889, () => {
-  console.log('Koa is listening in 8889');
+app.listen(8080, () => {
+  console.log('Koa is listening in 80');
 });
 
 export default app;
