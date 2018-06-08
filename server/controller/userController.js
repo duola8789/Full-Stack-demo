@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 
 import * as userModal from '../model/userModel'
 import config from '../../config/common';
-import serverConfig from '../config/server';
+import serverConfig from '../config/db';
 
 export async function getUserInfo(ctx) {
   const id = ctx.params.id; // 获取url里传过来的参数里的id

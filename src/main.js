@@ -7,7 +7,6 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import Axios from 'axios';
 
-import '@/helper/urlHelper'
 import '@/helper/httpHelper';
 
 Vue.prototype.$http = Axios;

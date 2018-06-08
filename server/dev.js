@@ -19,6 +19,7 @@ import db from './config/db';
 import * as auth from './router/auth';
 import * as api from './router/api';
 
+
 const app = new Koa();
 const router = new KoaRouter();
 
@@ -69,15 +70,13 @@ app.on('error', (err, ctx) => {
   console.log('server error: ', err);
 });
 
-app.use(staticServer(path.resolve('dist'))); // 将webpack打包好的项目目录作为Koa静态文件服务的目录
-
 router.use('/auth', authRouter.routes());
 router.use('/api', jwt({ secret: db.jwtSecret }), apiRouter.routes()); // 所有走/api/打头的请求都需要经过jwt验证。
 
 app.use(router.routes());
 
-app.listen(config.appServer.port, () => {
-  console.log(`Koa is listening in ${config.appServer.port}`);
+app.listen(config.devServer.apiPort, () => {
+  console.log(`Koa is listening in ${config.devServer.apiPort} for development`);
 });
 
 export default app;

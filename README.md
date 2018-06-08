@@ -8,8 +8,11 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:8088
 npm run dev
+
+# build for dev server
+npm run server
 
 # build for production with minification
 npm run build
@@ -17,8 +20,8 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 
-# build for server
-npm run server
+# build for real server
+npm run start
 ```
 
 ## 映射mysql
