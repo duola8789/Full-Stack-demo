@@ -7,12 +7,12 @@ module.exports = exports = {
     protocol: 'http://',
     host: '127.0.0.1',
     pagePort: 8088, // 开发前端端口
-    apiPort: 8099 // 开发后端口
+    port: 8099 // 开发后端口
   },
 
   appServer: {
     protocol: 'http://',
-    host: '154.8.150.30',
+    host: '139.199.112.184',
     port: 80
   },
 

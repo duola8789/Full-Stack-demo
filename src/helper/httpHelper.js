@@ -8,7 +8,7 @@ import * as uiHelper from '@/helper/uiHelper'
 
 const sever = process.env.NODE_ENV === "development" ? config.devServer : config.appServer;
 
-axios.defaults.baseURL = config.devServer.protocol + config.devServer.host + ':' + config.devServer.apiPort;
+axios.defaults.baseURL = sever.protocol + sever.host + ':' + sever.port;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.withCredentials = true;
 

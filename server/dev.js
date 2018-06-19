@@ -75,8 +75,8 @@ router.use('/api', jwt({ secret: db.jwtSecret }), apiRouter.routes()); // 所有
 
 app.use(router.routes());
 
-app.listen(config.devServer.apiPort, () => {
-  console.log(`Koa is listening in ${config.devServer.apiPort} for development`);
+app.listen(config.devServer.port, () => {
+  console.log(`Koa is listening in ${config.devServer.port} for development`);
 });
 
 export default app;
