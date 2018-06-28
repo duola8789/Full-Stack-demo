@@ -15,7 +15,7 @@ import path from 'path';
 import staticServer from 'koa-static';
 
 import config from '../config/common'
-import db from './config/db';
+import dbConfig from './config/db';
 import * as auth from './router/auth';
 import * as api from './router/api';
 
@@ -25,7 +25,9 @@ const router = new KoaRouter();
 const authRouter = auth.router;
 const apiRouter = api.router;
 
-app.use(Compress({ threshold: 2048 }));
+app.use(Compress({
+  threshold: 2048 // 要压缩的最小响应字节
+}));
 
 app.use(KoaBodyParser());
 app.use(KoaLogger());
@@ -72,7 +74,7 @@ app.on('error', (err, ctx) => {
 app.use(staticServer(path.resolve('dist'))); // 将webpack打包好的项目目录作为Koa静态文件服务的目录
 
 router.use('/auth', authRouter.routes());
-router.use('/api', jwt({ secret: db.jwtSecret }), apiRouter.routes()); // 所有走/api/打头的请求都需要经过jwt验证。
+router.use('/api', jwt({ secret: dbConfig.jwtSecret }), apiRouter.routes()); // 所有走/api/打头的请求都需要经过jwt验证。
 
 app.use(router.routes());
 

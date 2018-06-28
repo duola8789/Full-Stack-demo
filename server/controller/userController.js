@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 
 import * as userModal from '../model/userModel'
 import config from '../../config/common';
-import serverConfig from '../config/db';
+import dbConfig from '../config/db';
 
 export async function getUserInfo(ctx) {
   const id = ctx.params.id; // 获取url里传过来的参数里的id
@@ -24,7 +24,6 @@ export async function getUserInfo(ctx) {
       ret: null
     };
   }
-
 }
 
 export async function postUserAuth(ctx) {
@@ -52,7 +51,7 @@ export async function postUserAuth(ctx) {
     name: userInfo.username,
     id: userInfo.id,
   };
-  const secret = serverConfig.jwtSecret; // 指定密钥，这是之后用来判断token合法性的标志
+  const secret = dbConfig.jwtSecret; // 指定密钥，这是之后用来判断token合法性的标志
   const token = JWT.sign(userToken, secret); // 签发token
   ctx.body = {
     success: true,

@@ -37,7 +37,6 @@
 </template>
 
 <script>
-  import bcrypt from 'bcryptjs';
   import * as API from '@/newwork/api';
   import * as uiHelper from '@/helper/uiHelper';
 

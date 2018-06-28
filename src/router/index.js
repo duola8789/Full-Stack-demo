@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import JWT from 'jsonwebtoken';
+import JsonWebToken from 'jsonwebtoken';
 import Login from '@/components/Login'
 import Admin from '@/components/Admin'
 import AdminALL from '@/components/AdminALL'
@@ -35,7 +35,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const token = sessionStorage.getItem('userToken');
-  const isTokenRight = !!(token && JWT.decode(token) && (JWT.decode(token).iss === config.userToken.iss));
+  const isTokenRight = !!(token && JsonWebToken.decode(token) && (JsonWebToken.decode(token).iss === config.userToken.iss));
 
   // 全局设定发送请求header的token验证
   if (isTokenRight) {
