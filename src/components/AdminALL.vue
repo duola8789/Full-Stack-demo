@@ -1,11 +1,11 @@
 <template>
   <div class="table-container">
     <h1>EXAMPLES</h1>
-    <el-table :data="examples" border style="width: 100%" @row-click="goToAdmin">
-      <el-table-column prop="id" width=50 label="id" align="center"></el-table-column>
-      <el-table-column prop="title" label="标题" align="center"></el-table-column>
-      <el-table-column prop="image" label="图片" align="center"></el-table-column>
-    </el-table>
+    <ElTable :data="examples" border style="width: 100%" @row-click="goToAdmin">
+      <ElTableColumn prop="id" width=50 label="id" align="center"></ElTableColumn>
+      <ElTableColumn prop="title" label="标题" align="center"></ElTableColumn>
+      <ElTableColumn prop="image" label="图片" align="center"></ElTableColumn>
+    </ElTable>
   </div>
 </template>
 

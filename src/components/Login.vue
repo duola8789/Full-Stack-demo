@@ -5,32 +5,32 @@
     </div>
     <div class="main">
       <div>
-        <el-row type="flex" class="row-bg" justify="center">
-          <el-col :span="6">
-            <el-input type="text"
-                      placeholder="请输入用户名"
-                      v-model.trim="username"
-                      clearable
-                      autofocus="true"
-                      @keyup.enter.native="login">
-            </el-input>
-          </el-col>
-        </el-row>
-        <el-row type="flex" class="row-bg" justify="center">
-          <el-col :span="6">
-            <el-input type="password"
+        <ElRow type="flex" class="row-bg" justify="center">
+          <ElCol :span="6">
+            <ElInput type="text"
+                   placeholder="请输入用户名"
+                   v-model.trim="username"
+                   clearable
+                   autofocus="true"
+                   @keyup.enter.native="login">
+            </ElInput>
+          </ElCol>
+        </ElRow>
+        <ElRow type="flex" class="row-bg" justify="center">
+          <ElCol :span="6">
+            <ElInput type="password"
                       placeholder="请输入密码"
                       v-model.trim="password"
                       clearable
                       @keyup.enter.native="login">
-            </el-input>
-          </el-col>
-        </el-row>
-        <el-row type="flex" class="row-bg" justify="center">
-          <el-col :span="6">
-            <el-button type="primary" class="login-button" @click="login">登陆</el-button>
-          </el-col>
-        </el-row>
+            </ElInput>
+          </ElCol>
+        </ElRow>
+        <ElRow type="flex" class="row-bg" justify="center">
+          <ElCol :span="6">
+            <ElButton type="primary" class="login-button" @click="login">登陆</ElButton>
+          </ElCol>
+        </ElRow>
       </div>
     </div>
   </div>
