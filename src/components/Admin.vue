@@ -1,11 +1,14 @@
 <template>
   <div>
-    <p>{{exampleInfo.id}}</p>
-    <p>{{exampleInfo.title}}</p>
-    <p>{{exampleInfo.image}}</p>
-    <button @click="add">add</button>
-    <button @click="edit">edit</button>
-    <button @click="remove">delete</button>
+    <ul class="ul-container">
+      <li>id : {{exampleInfo.id}}</li>
+      <li>title: {{exampleInfo.title}}</li>
+      <li>image: {{exampleInfo.image}}</li>
+    </ul>
+    <ElButton type="primary" icon="el-icon-plus" size="medium" @click="add">add</ElButton>
+    <ElButton type="primary" icon="el-icon-edit" size="medium" @click="edit">edit</ElButton>
+    <ElButton type="danger" icon="el-icon-delete" size="medium" @click="remove">delete</ElButton>
+    <ElButton type="danger" icon="el-icon-back" size="medium" @click="back">Back</ElButton>
   </div>
 </template>
 
@@ -109,11 +112,23 @@
             console.log('更新example错误', e)
           })
       },
+      back() {
+        console.log(this.$router.back())
+      }
     },
     components: {}
   }
 </script>
 
-<style>
-
+<style scoped>
+  .ul-container {
+    width: 450px;
+    margin: 50px auto;
+    border: 1px solid darkgoldenrod;
+    border-radius: 10px;
+    text-align: left;
+  }
+  .ul-container li {
+    margin: 20px 0;
+  }
 </style>
