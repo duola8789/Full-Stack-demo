@@ -1,4 +1,4 @@
-# background-demo1
+# background-demo
 
 > A Vue.js project
 
