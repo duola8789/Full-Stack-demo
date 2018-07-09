@@ -12,6 +12,6 @@
     "transform-vue-jsx",
     "transform-runtime",
     "transform-es2015-modules-commonjs",
-    ["component", {"libraryName": "element-ui", "styleLibraryName": "theme-chalk"}]
+    ["component", {"libraryName": "elementDllReferencePluginui", "styleLibraryName": "theme-chalk"}]
   ]
 }
